@@ -28,7 +28,7 @@ The list of **MarTech platforms** below is categorized by types, for each platfo
 |---|---|---|
 |Primo|Drive customer retention with well-trusted loyalty platform|[Get started](./primo.html)|
 
-## Sale CRM
+## Sales CRM
 
 |Platform|Description||
 |---|---|---|
