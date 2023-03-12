@@ -6,37 +6,37 @@ The list of **MarTech platforms** below is categorized by types, for each platfo
 
 ## Chatbot
 
-|Platform Name|Company|Description|API|
+|Platform Name|Company|Description||
 |---|---|---|---|
-|AIYA|MeGenius|A.I. For your business|[Read more..](./aiya.html)|
+|AIYA|MeGenius|A.I. For your business|[Get started](./aiya.html)|
 
 ## Chat Center
 
-|Platform|Company|Description|API|
+|Platform|Company|Description||
 |---|---|---|---|
-|EX10|Emetworks|Extensions for business, to boost customer satisfaction, loyalty and sales.|[Read more..](./ex10.html)|
+|EX10|Emetworks|Extensions for business, to boost customer satisfaction, loyalty and sales.|[Get started](./ex10.html)|
 
 ## Consent Management
 
-|Platform|Company|Description|API|
+|Platform|Company|Description||
 |---|---|---|---|
-|Cookie Plus|Predictive|Manage cookie consent on websites easily with CookiePlus.|[Read more..](./cookieplus.html)|
+|Cookie Plus|Predictive|Manage cookie consent on websites easily with CookiePlus.|[Get started](./cookieplus.html)|
 
 ## Loyalty CRM
 
-|Platform|Company|Description|API|
+|Platform|Company|Description||
 |---|---|---|---|
-|Primo|Primo|Drive customer retention with well-trusted loyalty platform|[Read more..](./primo.html)|
+|Primo|Primo|Drive customer retention with well-trusted loyalty platform|[Get started](./primo.html)|
 
 ## Sale CRM
 
-|Platform|Company|Description|API|
+|Platform|Company|Description||
 |---|---|---|---|
-|Wisible|Wisible|Gain Insights, Drive More Leads, UpSpeed Growth|[Read more..](./wisible.html)|
+|Wisible|Wisible|Gain Insights, Drive More Leads, UpSpeed Growth|[Get started](./wisible.html)|
 
 ## Marketing Automation
 
-|Platform|Company|Description|API|
+|Platform|Company|Description||
 |---|---|---|---|
-|PAM|3DS Interactive|PAM can help marketer do their everyday tasks easier & automate.|[Read more..](./pam.html)|
+|PAM|3DS Interactive|PAM can help marketer do their everyday tasks easier & automate.|[Get started](./pam.html)|
 
