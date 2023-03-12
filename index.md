@@ -38,5 +38,5 @@ The list of **MarTech platforms** below is categorized by types, for each platfo
 
 |Platform|Company|Description|API|
 |---|---|---|---|
-|PAM|3DS Interactive|PAM can help marketer do their everyday tasks easier & automate.|https://docs.pams.ai/|
+|PAM|3DS Interactive|PAM can help marketer do their everyday tasks easier & automate.|[PAM](./pam.html).|
 
