@@ -2,6 +2,6 @@
 layout: default
 ---
 
-## PAM Marketing Automation
+## AIYA
 
 [back](./)
