@@ -3,3 +3,4 @@ plugins:
 - jekyll-remote-theme
 title: MarTech Association of Thailand
 description: The collection of MarTech platforms presented to you by MarTech Association
+logo: assets/img/logo.jpg
