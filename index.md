@@ -20,13 +20,13 @@ The list of **MarTech platforms** below is categorized by types, for each platfo
 
 |Platform|Company|Description|API|
 |---|---|---|---|
-|Cookie Plus|Predictive|จัดการความยินยอมคุกกี้บนเว็บไซต์ได้ง่ายๆ ด้วย CookiePlus.|[Read more..](./cookieplus.html)|
+|Cookie Plus|Predictive|Manage cookie consent on websites easily with CookiePlus.|[Read more..](./cookieplus.html)|
 
 ## Loyalty CRM
 
 |Platform|Company|Description|API|
 |---|---|---|---|
-|Primo|Primo|DRIVE CUSTOMER RETENTION WITH WELL-TRUSTED LOYALTY PLATFORM|[Read more..](./primo.html)|
+|Primo|Primo|Drive customer retention with well-trusted loyalty platform|[Read more..](./primo.html)|
 
 ## Sale CRM
 
