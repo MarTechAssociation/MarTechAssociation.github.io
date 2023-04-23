@@ -33,6 +33,8 @@ The list of **MarTech platforms** below is categorized by types, for each platfo
 |---|---|---|`, page.Category))
 		}
 
+		currentCategory = string(page.Category)
+
 		// Write each platform items
 		// sample
 		// |AIYA|A.I. For your business|[Get started](./aiya.html)|

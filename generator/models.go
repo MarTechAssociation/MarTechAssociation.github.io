@@ -2,6 +2,8 @@
 package generator
 
 import (
+	"strings"
+
 	"github.com/martechassociation/martechassociation.github.io/f"
 	"github.com/martechassociation/martechassociation.github.io/gcloud"
 )
@@ -93,12 +95,17 @@ type LandingPage struct {
 }
 
 func (m *LandingPage) GetShortDescription() string {
-	if len(m.Description) < MaxDescriptionInHomePage {
-		return m.Description
+	desc := strings.ReplaceAll(m.Description, "\n", "")
+	if len(desc) < MaxDescriptionInHomePage {
+		return desc
 	}
-	return m.Description[:MaxDescriptionInHomePage] + "..."
+	return desc[:MaxDescriptionInHomePage] + "..."
+}
+
+func (m *LandingPage) GetName() string {
+	return strings.ReplaceAll(m.Name, "\n", "")
 }
 
 func (m *LandingPage) GetLandingPageFileName() string {
-	return f.EscapeName(m.Name)
+	return f.EscapeName(m.GetName())
 }

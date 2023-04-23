@@ -75,7 +75,7 @@ func (svc *Generator) GenerateLandingPages() error {
 	// Sort by category and name
 	sort.Slice(allPages, func(i, j int) bool {
 		return allPages[i].Category < allPages[j].Category &&
-			allPages[i].Name < allPages[j].Name
+			allPages[i].GetName() < allPages[j].GetName()
 	})
 
 	ctx.LogObj("RESULT", "allPages", allPages)
