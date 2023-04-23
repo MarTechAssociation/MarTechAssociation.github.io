@@ -24,40 +24,40 @@ PAM can help marketer do their everyday tasks easier & automate. To increase ope
 
 <table>
 <tr>
-<td><img src="assets/img/pam/presents-slides-00-71631.png"></td></tr>
+<td><img src="assets/img/pam/presents-slides-00-51288.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/presents-slides-01-47803.png"></td></tr>
+<td><img src="assets/img/pam/presents-slides-01-98046.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/presents-slides-02-37356.png"></td></tr>
+<td><img src="assets/img/pam/presents-slides-02-58624.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/presents-slides-03-54631.png"></td></tr>
+<td><img src="assets/img/pam/presents-slides-03-26720.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/presents-slides-04-69269.png"></td></tr>
+<td><img src="assets/img/pam/presents-slides-04-31688.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/presents-slides-05-66744.png"></td></tr>
+<td><img src="assets/img/pam/presents-slides-05-41061.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/presents-slides-06-49607.png"></td></tr>
+<td><img src="assets/img/pam/presents-slides-06-39662.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/presents-slides-07-79273.png"></td></tr>
+<td><img src="assets/img/pam/presents-slides-07-22360.png"></td></tr>
 </table>
 
 ### Screenshots
 
 <table>
 <tr>
-<td><img src="assets/img/pam/screens-slides-00-13105.png"></td></tr>
+<td><img src="assets/img/pam/screens-slides-00-93772.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/screens-slides-01-16717.png"></td></tr>
+<td><img src="assets/img/pam/screens-slides-01-52209.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/screens-slides-02-14393.png"></td></tr>
+<td><img src="assets/img/pam/screens-slides-02-95018.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/screens-slides-03-40662.png"></td></tr>
+<td><img src="assets/img/pam/screens-slides-03-72755.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/screens-slides-04-62960.png"></td></tr>
+<td><img src="assets/img/pam/screens-slides-04-17930.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/screens-slides-05-74775.png"></td></tr>
+<td><img src="assets/img/pam/screens-slides-05-89088.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/screens-slides-06-78062.png"></td></tr>
+<td><img src="assets/img/pam/screens-slides-06-37077.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/screens-slides-07-72466.png"></td></tr>
+<td><img src="assets/img/pam/screens-slides-07-74190.png"></td></tr>
 </table>
