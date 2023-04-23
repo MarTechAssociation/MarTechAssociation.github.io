@@ -61,3 +61,26 @@ func (rs *SheetsResultSet) MapScan(item map[string]interface{}) error {
 
 	return nil
 }
+
+type MarTechCategory string
+
+const (
+	MarketingAnalyticsPerformanceTrackingAndAttribution MarTechCategory = "Marketing Analytics, Performance Tracking & Attribution"
+	CloudDataIntegrationPlatform                        MarTechCategory = "Cloud/Data Integration Platform"
+	BusinessCustomerDataVisualizationTechnologies       MarTechCategory = "Business/Customer Data Visualization Technologies"
+	ConversionRateOptimizationAndPersonalization        MarTechCategory = "Conversion Rate Optimization / Personalization"
+	AdvertisingTechnology                               MarTechCategory = "Advertising Technology"
+	VisitorIdentificationSoftware                       MarTechCategory = "Visitor Identification Software"
+	AffiliateMarketing                                  MarTechCategory = "Affiliate Marketing"
+	ContentMarketingTools                               MarTechCategory = "Content Marketing Tools"
+	SEOtool                                             MarTechCategory = "SEO tool"
+	SocialMediaMarketing                                MarTechCategory = "Social Media Marketing"
+	CRMCDPMarketingAutomation                           MarTechCategory = "CRM, CDP, Marketing Automation"
+	MarketingCloudSuites                                MarTechCategory = "Marketing Cloud Suites"
+)
+
+type LandingPage struct {
+	Name        string          `json:"name"`
+	Category    MarTechCategory `json:"category"`
+	Description string          `json:"description"`
+}

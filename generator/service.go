@@ -3,8 +3,10 @@ package generator
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 
+	"github.com/martechassociation/martechassociation.github.io/f"
 	"github.com/martechassociation/martechassociation.github.io/gcloud"
 	"github.com/martechassociation/martechassociation.github.io/microservices"
 )
@@ -46,6 +48,7 @@ func (svc *Generator) GenerateLandingPages() error {
 	toCol := len(columns) - 1
 	fromRow := 1
 
+	allPages := []*LandingPage{}
 	for {
 
 		// Move read last row pointer to the next 1000 records
@@ -60,23 +63,47 @@ func (svc *Generator) GenerateLandingPages() error {
 		}
 
 		rs := NewSheetsResultSet(firstRow, sheets)
-		processRows := svc.buildLandingPage(rs, gg)
-		if processRows == 0 {
+		pages := svc.buildLandingPage(rs, gg)
+		if len(pages) == 0 {
 			break
 		}
+
+		allPages = append(allPages, pages...)
+		fromRow += len(allPages)
 	}
 
-	ctx.Log("Generate landing pages done")
+	// Sort by category and name
+	sort.Slice(allPages, func(i, j int) bool {
+		return allPages[i].Category < allPages[j].Category &&
+			allPages[i].Name < allPages[j].Name
+	})
+
+	ctx.LogObj("RESULT", "allPages", allPages)
+
+	if len(allPages) > 0 {
+		err := svc.buildIndexMarkdown(allPages)
+		if err != nil {
+			ctx.WrapError(err, err)
+		}
+
+		for _, page := range allPages {
+			err := svc.buildDetailMarkdown(page)
+			if err != nil {
+				ctx.WrapError(err, err)
+			}
+		}
+	}
 
 	return nil
 }
 
 func (svc *Generator) buildLandingPage(
 	rs *SheetsResultSet,
-	gg gcloud.IGCloud) int /*process rows*/ {
+	gg gcloud.IGCloud) []*LandingPage {
 
 	ctx := svc.ctx
 
+	pages := []*LandingPage{}
 	i := -1
 
 	for rs.Next() {
@@ -86,24 +113,35 @@ func (svc *Generator) buildLandingPage(
 		err := rs.MapScan(item)
 		if err != nil {
 			ctx.WrapError(err, err)
-			return i
+			return pages
 		}
 
+		page := &LandingPage{}
 		for k, v := range item {
+			ctx.Log(fmt.Sprintf("i=%d", i))
 			ctx.Log(fmt.Sprintf("k=%s", k))
 			ctx.Log(fmt.Sprintf("v=%s", v))
+			ctx.Log("---")
+
+			if strings.HasPrefix(k, "Your MarTech name") {
+				page.Name = f.InterfaceToString(v)
+			} else if strings.HasPrefix(k, "What is your MarTech categories?") {
+				page.Category = MarTechCategory(f.InterfaceToString(v))
+			} else if strings.HasPrefix(k, "Short explanation of what is your product or service") {
+				page.Description = f.InterfaceToString(v)
+			}
+
 			// if strings.HasPrefix(k, "Your Presentations") && v != nil {
 			// 	err := svc.buildPresentationThumbnail(v.(string), gg)
 			// 	if err != nil {
 			// 		ctx.WrapError(err, err)
 			// 	}
 			// }
-			ctx.Log("---")
 		}
-
+		pages = append(pages, page)
 	}
 
-	return i
+	return pages
 }
 
 func (svc *Generator) buildPresentationThumbnail(
