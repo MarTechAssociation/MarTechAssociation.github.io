@@ -11,6 +11,16 @@ import (
 
 var specialCharsRegex = regexp.MustCompile("[^a-zA-Z0-9]+")
 
+func lastPartsOfFilePath(filePath string, n int) string {
+	// Split only last 3 parts of file path
+	paths := strings.Split(filePath, "/")
+	short := filePath
+	if len(paths) > n {
+		short = strings.Join(paths[len(paths)-n:], "/")
+	}
+	return short
+}
+
 func randString() string {
 	i := rand.Int()
 	return fmt.Sprintf("%d", i)

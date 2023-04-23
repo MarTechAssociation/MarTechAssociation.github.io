@@ -1,6 +1,7 @@
 package microservices
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"runtime"
@@ -28,7 +29,7 @@ func NewHTTPContext(ms *Microservice, c echo.Context) *HTTPContext {
 func (ctx *HTTPContext) Log(message string) {
 	_, fn, line, _ := runtime.Caller(1)
 	fns := strings.Split(fn, "/")
-	fmt.Println("HTTP:", fns[len(fns)-1], line, message)
+	fmt.Println("HTTP:", fmt.Sprintf("%s:%d", fns[len(fns)-1], line), message)
 }
 
 // Param return parameter by name
@@ -72,7 +73,14 @@ func (ctx *HTTPContext) Now() time.Time {
 
 func (ctx *HTTPContext) WrapError(errIn error, errOut error) error {
 	if errIn != nil {
-		ctx.Log(fmt.Sprintf("err=%s", errIn.Error()))
+		_, fn, line, _ := runtime.Caller(1)
+		fns := strings.Split(fn, "/")
+		fmt.Println("HTTP:", fmt.Sprintf("%s:%d", fns[len(fns)-1], line), errIn.Error())
 	}
 	return errOut
+}
+
+func (ctx *HTTPContext) LogObj(tag string, key string, message any) {
+	js, _ := json.Marshal(message)
+	ctx.Log(fmt.Sprintf("[%s] %s=%s", strings.ToUpper(tag), key, string(js)))
 }

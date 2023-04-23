@@ -60,7 +60,7 @@ func (svc *Generator) GenerateLandingPages() error {
 		}
 
 		rs := NewSheetsResultSet(firstRow, sheets)
-		processRows := buildLandingPage(ctx, rs)
+		processRows := svc.buildLandingPage(rs, gg)
 		if processRows == 0 {
 			break
 		}
@@ -71,7 +71,11 @@ func (svc *Generator) GenerateLandingPages() error {
 	return nil
 }
 
-func buildLandingPage(ctx microservices.IContext, rs *SheetsResultSet) int /*process rows*/ {
+func (svc *Generator) buildLandingPage(
+	rs *SheetsResultSet,
+	gg gcloud.IGCloud) int /*process rows*/ {
+
+	ctx := svc.ctx
 
 	i := -1
 
@@ -88,12 +92,36 @@ func buildLandingPage(ctx microservices.IContext, rs *SheetsResultSet) int /*pro
 		for k, v := range item {
 			ctx.Log(fmt.Sprintf("k=%s", k))
 			ctx.Log(fmt.Sprintf("v=%s", v))
+			if strings.HasPrefix(k, "Your Presentations") && v != nil {
+				err := svc.buildPresentationThumbnail(v.(string), gg)
+				if err != nil {
+					ctx.WrapError(err, err)
+				}
+			}
 			ctx.Log("---")
 		}
 
 	}
 
 	return i
+}
+
+func (svc *Generator) buildPresentationThumbnail(
+	slidesURL string,
+	gg gcloud.IGCloud) error {
+
+	ctx := svc.ctx
+	cfg := svc.cfg
+
+	token := cfg.GoogleToken()
+	slideID := gcloud.GetSlideID(slidesURL)
+	filePaths, err := gg.ReadSlidesThumbnails(token, slideID, 10)
+	if err != nil {
+		return ctx.WrapError(err, err)
+	}
+
+	ctx.LogObj("TEST", "filePaths", filePaths)
+	return nil
 }
 
 func buildColumnsFromSheets(sheet *gcloud.GSheet) []string {

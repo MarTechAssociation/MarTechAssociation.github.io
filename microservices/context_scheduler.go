@@ -2,6 +2,7 @@
 package microservices
 
 import (
+	"encoding/json"
 	"fmt"
 	"runtime"
 	"strings"
@@ -24,7 +25,7 @@ func NewSchedulerContext(ms *Microservice) *SchedulerContext {
 func (ctx *SchedulerContext) Log(message string) {
 	_, fn, line, _ := runtime.Caller(1)
 	fns := strings.Split(fn, "/")
-	fmt.Println("Scheduler:", fns[len(fns)-1], line, message)
+	fmt.Println("SC:", fmt.Sprintf("%s:%d", fns[len(fns)-1], line), message)
 }
 
 // Param return parameter by name (empty in scheduler)
@@ -64,7 +65,14 @@ func (ctx *SchedulerContext) Requester(baseURL string, timeout time.Duration) IR
 
 func (ctx *SchedulerContext) WrapError(errIn error, errOut error) error {
 	if errIn != nil {
-		ctx.Log(fmt.Sprintf("err=%s", errIn.Error()))
+		_, fn, line, _ := runtime.Caller(1)
+		fns := strings.Split(fn, "/")
+		fmt.Println("SC:", fmt.Sprintf("%s:%d", fns[len(fns)-1], line), errIn.Error())
 	}
 	return errOut
+}
+
+func (ctx *SchedulerContext) LogObj(tag string, key string, message any) {
+	js, _ := json.Marshal(message)
+	ctx.Log(fmt.Sprintf("[%s] %s=%s", strings.ToUpper(tag), key, string(js)))
 }

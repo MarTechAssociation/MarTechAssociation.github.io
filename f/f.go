@@ -4,8 +4,13 @@ package f
 import (
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"strconv"
 )
+
+func RandomMinMax(min int, max int) int {
+	return rand.Intn(max-min) + min
+}
 
 func StructToMap(s interface{}) map[string]interface{} {
 	var mapped map[string]interface{}

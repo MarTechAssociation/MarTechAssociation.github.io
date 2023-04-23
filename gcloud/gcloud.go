@@ -11,6 +11,11 @@ type IGCloud interface {
 	ReadSheetColumns(token string, fileID string, tabName string) ([]string, error)
 	OpenSheet(token string, fileID string, readRange string) (*GSheet, error)
 	OpenSheetR(token string, fileID string, readRange string, renderOption GSheetValueType) (*GSheet, error)
+
+	ReadSlidesThumbnails(
+		token string,
+		fileID string,
+		maxSlides int) ([]string /*file paths*/, error)
 }
 
 // GFile is struct represent file in gdrive
