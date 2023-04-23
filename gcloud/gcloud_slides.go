@@ -42,7 +42,7 @@ func (g *GCloud) ReadSlidesThumbnails(
 		// resp = https://url-to-download-thumbnail
 		resp, err := client.Presentations.Pages.GetThumbnail(fileID, page.ObjectId).
 			ThumbnailPropertiesMimeType("PNG").
-			ThumbnailPropertiesThumbnailSize("LARGE").
+			ThumbnailPropertiesThumbnailSize("MEDIUM").
 			Do()
 		if err != nil {
 			return nil, ctx.WrapError(err, err)

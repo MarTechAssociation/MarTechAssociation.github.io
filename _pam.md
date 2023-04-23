@@ -41,6 +41,7 @@ PAM can help marketer do their everyday tasks easier & automate. To increase ope
 | Channels        | Contact
 |:----------------|:------------------------------------|
 | Website         | [https://pams.ai](https://pams.ai)  |
+| Email           | chananya@pams.ai                    |
 | Mobile          | +66909832659                        |
 | Facebook        | [https://www.facebook.com/PAMmarketingAutomation](https://www.facebook.com/PAMmarketingAutomation)|
-| LINE            ||
+| LINE            | line-id |

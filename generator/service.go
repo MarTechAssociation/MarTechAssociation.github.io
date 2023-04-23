@@ -129,8 +129,27 @@ func (svc *Generator) buildLandingPage(
 				page.Category = MarTechCategory(f.InterfaceToString(v))
 			} else if strings.HasPrefix(k, "Short explanation of what is your product or service") {
 				page.Description = f.InterfaceToString(v)
+			} else if strings.HasPrefix(k, "Email for customer to contact") {
+				page.Email = f.InterfaceToString(v)
+			} else if strings.HasPrefix(k, "Mobile for customer to contact") {
+				page.Mobile = f.InterfaceToString(v)
+			} else if strings.HasPrefix(k, "Your Facebook Page for customer to contact") {
+				page.Facebook = f.InterfaceToString(v)
+			} else if strings.HasPrefix(k, "Your Website for customer to contact") {
+				page.Website = f.InterfaceToString(v)
+			} else if strings.HasPrefix(k, "Your LINE ID or LINE OA") {
+				page.LINE = f.InterfaceToString(v)
+			} else if strings.HasPrefix(k, "Sample user interfaces of your software") {
+				url := f.InterfaceToString(v)
+				filePaths, err := svc.buildSlidesThumbnails(url, "screens", gg)
+				if err != nil {
+					ctx.WrapError(err, err)
+					continue
+				}
+				page.ScreenSlides = filePaths
 			} else if strings.HasPrefix(k, "Your Presentations") && v != nil {
-				filePaths, err := svc.buildPresentationThumbnail(v.(string), gg)
+				url := f.InterfaceToString(v)
+				filePaths, err := svc.buildSlidesThumbnails(url, "presents", gg)
 				if err != nil {
 					ctx.WrapError(err, err)
 					continue
@@ -144,8 +163,9 @@ func (svc *Generator) buildLandingPage(
 	return pages
 }
 
-func (svc *Generator) buildPresentationThumbnail(
+func (svc *Generator) buildSlidesThumbnails(
 	slidesURL string,
+	imagePrefix string,
 	gg gcloud.IGCloud) ([]string, error) {
 
 	ctx := svc.ctx
@@ -153,7 +173,7 @@ func (svc *Generator) buildPresentationThumbnail(
 
 	token := cfg.GoogleToken()
 	slideID := gcloud.GetSlideID(slidesURL)
-	filePaths, err := gg.ReadSlidesThumbnails(token, slideID, "presents", MaxSlidesToRead)
+	filePaths, err := gg.ReadSlidesThumbnails(token, slideID, imagePrefix, MaxSlidesToRead)
 	if err != nil {
 		return nil, ctx.WrapError(err, err)
 	}

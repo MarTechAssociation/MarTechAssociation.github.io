@@ -84,6 +84,12 @@ type LandingPage struct {
 	Category      MarTechCategory `json:"category"`
 	Description   string          `json:"description"`
 	PresentSlides []string        `json:"present_slides"`
+	ScreenSlides  []string        `json:"screen_slides"`
+	Email         string          `json:"email"`
+	Mobile        string          `json:"mobile"`
+	Website       string          `json:"website"`
+	Facebook      string          `json:"facebook"`
+	LINE          string          `json:"line"`
 }
 
 func (m *LandingPage) GetShortDescription() string {

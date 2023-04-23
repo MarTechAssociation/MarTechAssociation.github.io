@@ -61,21 +61,124 @@ func (svc *Generator) buildDetailMarkdown(page *LandingPage) error {
 layout: default
 ---
 
+[back](./)
+
 ## %s
 
-[back](./)
-`, page.Name))
+> %s
 
-	fileName := fmt.Sprintf("%s.md", page.GetLandingPageFileName())
-	err := svc.writeFileContent(sb, fileName)
+%s
+
+`, page.Name,
+		page.Category,
+		page.Description))
+
+	// Write Contacts
+	// 	### Contacts
+	// | Channels        | Contact
+	// |:----------------|:------------------------------------|
+	// | Website         | [https://pams.ai](https://pams.ai)  |
+	// | Email           | chananya@pams.ai                    |
+	// | Mobile          | +66909832659                        |
+	// | Facebook        | [https://www.facebook.com/PAMmarketingAutomation](https://www.facebook.com/PAMmarketingAutomation)|
+	// | LINE            | line-id                             |
+	sb.Append("\n")
+	sb.Append(`### Contacts
+
+| Channels        | Contact |
+|:----------------|:------------------------------------|
+`)
+	if len(page.Website) > 0 {
+		sb.Append(`| Website |`)
+		sb.Append(fmt.Sprintf("[%s](%s)", page.Website, page.Website))
+		sb.Append("|\n")
+	}
+	if len(page.Email) > 0 {
+		sb.Append(`| Email |`)
+		sb.Append(page.Email)
+		sb.Append("|\n")
+	}
+	if len(page.Mobile) > 0 {
+		sb.Append(`| Mobile |`)
+		sb.Append(page.Mobile)
+		sb.Append("|\n")
+	}
+	if len(page.Facebook) > 0 {
+		sb.Append(`| Facebook |`)
+		sb.Append(fmt.Sprintf("[%s](%s)", page.Facebook, page.Facebook))
+		sb.Append("|\n")
+	}
+	if len(page.LINE) > 0 {
+		sb.Append(`| LINE |`)
+		sb.Append(page.LINE)
+		sb.Append("|\n")
+	}
+
+	// Presentations images table
+	sb.Append("\n")
+	sb.Append(`### Presentations`)
+	sb.Append("\n")
+	err := svc.buildImagesTable(sb, page.PresentSlides, page.GetLandingPageFileName())
+	if err != nil {
+		return ctx.WrapError(err, err)
+	}
+	sb.Append("\n")
+
+	// Screenshots images table
+	sb.Append(`### Screenshots`)
+	sb.Append("\n")
+	err = svc.buildImagesTable(sb, page.ScreenSlides, page.GetLandingPageFileName())
 	if err != nil {
 		return ctx.WrapError(err, err)
 	}
 
+	// Write all content to file
+	fileName := fmt.Sprintf("%s.md", page.GetLandingPageFileName())
+	err = svc.writeFileContent(sb, fileName)
+	if err != nil {
+		return ctx.WrapError(err, err)
+	}
+
+	// Copy image to asset dir / delete the old one
 	err = svc.copyImagesToAssetsDir(page)
 	if err != nil {
 		return ctx.WrapError(err, err)
 	}
+	return nil
+}
+
+func (svc *Generator) buildImagesTable(
+	sb *StringBuilder,
+	images []string,
+	landingPageName string) error {
+
+	sb.Append("\n")
+
+	if len(images) == 0 {
+		return nil
+	}
+
+	// <table>
+	// 	<tr>
+	// 	  <td><img src="assets/img/pam/presents-slides-00-27995.png"></td>
+	// 	  <td><img src="assets/img/pam/presents-slides-01-16836.png"></td>
+	//   </tr>
+	//   <tr>
+	// 	  <td><img src="assets/img/pam/presents-slides-02-14868.png"></td>
+	// 	  <td><img src="assets/img/pam/presents-slides-03-30686.png"></td>
+	// 	</tr>
+	//   </table>
+
+	sb.Append("<table>\n")
+	// Draw 2 images per row
+	for _, image := range images {
+		sb.Append("<tr>\n")
+		destPath := svc.imageAssetPath(image, landingPageName)
+		sb.Append(fmt.Sprintf(`<td><img src="%s"></td>`, destPath))
+		sb.Append("</tr>\n")
+	}
+	sb.Append("</table>\n")
+
 	return nil
 }
 
@@ -87,12 +190,19 @@ func (svc *Generator) copyImagesToAssetsDir(page *LandingPage) error {
 		return ctx.WrapError(err, err)
 	}
 
+	// Copy presentations
 	for _, filePath := range page.PresentSlides {
-		destFileName := filepath.Base(filePath)
-		destPath := fmt.Sprintf("%s%s/%s",
-			ImageAssetsDirPrefix,
-			page.GetLandingPageFileName(),
-			destFileName)
+		destPath := svc.imageAssetPath(filePath, page.GetLandingPageFileName())
+		err := svc.copyImage(filePath, destPath)
+		if err != nil {
+			ctx.WrapError(err, err)
+			continue
+		}
+	}
+
+	// Copy screenshots
+	for _, filePath := range page.ScreenSlides {
+		destPath := svc.imageAssetPath(filePath, page.GetLandingPageFileName())
 		err := svc.copyImage(filePath, destPath)
 		if err != nil {
 			ctx.WrapError(err, err)
@@ -100,6 +210,15 @@ func (svc *Generator) copyImagesToAssetsDir(page *LandingPage) error {
 		}
 	}
 	return nil
+}
+
+func (svc *Generator) imageAssetPath(filePath string, landingPageName string) string {
+	destFileName := filepath.Base(filePath)
+	destPath := fmt.Sprintf("%s%s/%s",
+		ImageAssetsDirPrefix,
+		landingPageName,
+		destFileName)
+	return destPath
 }
 
 func (svc *Generator) copyImage(sourceFile string, destFile string) error {
