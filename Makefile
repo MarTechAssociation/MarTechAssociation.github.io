@@ -1,4 +1,6 @@
 build:
 	export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@3/lib/pkgconfig" && go build -tags dynamic .
 run:
-	source .env && SERVICE_ID=http && go run main.go
+	source .env && source .env_dev && SERVICE_ID=http && go run main.go
+gen:
+	curl -XGET "http://localhost:8080/gen"

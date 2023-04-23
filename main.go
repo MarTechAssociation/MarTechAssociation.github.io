@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/martechassociation/martechassociation.github.io/generator"
 	"github.com/martechassociation/martechassociation.github.io/microservices"
 )
 
@@ -29,6 +30,9 @@ func startServices(ms *microservices.Microservice, cfg microservices.IConfig) {
 
 func startHTTPServices(ms *microservices.Microservice, cfg microservices.IConfig) {
 	ms.GET("/gen", func(ctx microservices.IContext) error {
+		gen := generator.NewGenerator(ctx, cfg)
+		gen.GenerateLandingPages()
+
 		resp := map[string]string{"status": "success"}
 		ctx.Response(http.StatusOK, resp)
 		return nil

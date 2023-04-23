@@ -6,6 +6,7 @@ import "os"
 // IConfig is interface for application config
 type IConfig interface {
 	ServiceID() string
+	GoogleToken() string
 }
 
 // Config implement IConfig
@@ -19,4 +20,8 @@ func NewConfig() *Config {
 // ServiceID return ID of service
 func (cfg *Config) ServiceID() string {
 	return os.Getenv("SERVICE_ID")
+}
+
+func (cfg *Config) GoogleToken() string {
+	return os.Getenv("GOOGLE_TOKEN")
 }

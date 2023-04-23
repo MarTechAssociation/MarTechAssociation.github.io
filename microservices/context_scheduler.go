@@ -61,3 +61,10 @@ func (ctx *SchedulerContext) Now() time.Time {
 func (ctx *SchedulerContext) Requester(baseURL string, timeout time.Duration) IRequester {
 	return NewRequester(baseURL, timeout, ctx.ms)
 }
+
+func (ctx *SchedulerContext) WrapError(errIn error, errOut error) error {
+	if errIn != nil {
+		ctx.Log(fmt.Sprintf("err=%s", errIn.Error()))
+	}
+	return errOut
+}

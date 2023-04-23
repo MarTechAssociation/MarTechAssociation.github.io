@@ -69,3 +69,10 @@ func (ctx *HTTPContext) Requester(baseURL string, timeout time.Duration) IReques
 func (ctx *HTTPContext) Now() time.Time {
 	return time.Now()
 }
+
+func (ctx *HTTPContext) WrapError(errIn error, errOut error) error {
+	if errIn != nil {
+		ctx.Log(fmt.Sprintf("err=%s", errIn.Error()))
+	}
+	return errOut
+}

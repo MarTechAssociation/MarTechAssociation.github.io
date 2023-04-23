@@ -16,4 +16,5 @@ type IContext interface {
 	Now() time.Time
 
 	Requester(baseURL string, timeout time.Duration) IRequester
+	WrapError(errIn error, errOut error) error
 }
