@@ -80,9 +80,10 @@ const (
 )
 
 type LandingPage struct {
-	Name        string          `json:"name"`
-	Category    MarTechCategory `json:"category"`
-	Description string          `json:"description"`
+	Name          string          `json:"name"`
+	Category      MarTechCategory `json:"category"`
+	Description   string          `json:"description"`
+	PresentSlides []string        `json:"present_slides"`
 }
 
 func (m *LandingPage) GetShortDescription() string {

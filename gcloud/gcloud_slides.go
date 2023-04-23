@@ -16,6 +16,7 @@ import (
 func (g *GCloud) ReadSlidesThumbnails(
 	token string,
 	fileID string,
+	filePrefix string,
 	maxSlides int) ([]string /*file paths*/, error) {
 
 	ctx := g.ctx
@@ -56,7 +57,7 @@ func (g *GCloud) ReadSlidesThumbnails(
 
 		// Write the image data to a file
 		fileSuffix := f.RandomMinMax(10001, 99999)
-		filePath := fmt.Sprintf("%sslides-%d.png", os.TempDir(), fileSuffix)
+		filePath := fmt.Sprintf("%s%s-slides-%02d-%d.png", os.TempDir(), filePrefix, i, fileSuffix)
 
 		// Save the image to a file
 		outFile, err := os.Create(filePath)

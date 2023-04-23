@@ -3,7 +3,9 @@ package generator
 
 import (
 	"fmt"
+	"io"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -85,14 +87,54 @@ func (svc *Generator) copyImagesToAssetsDir(page *LandingPage) error {
 		return ctx.WrapError(err, err)
 	}
 
+	for _, filePath := range page.PresentSlides {
+		destFileName := filepath.Base(filePath)
+		destPath := fmt.Sprintf("%s%s/%s",
+			ImageAssetsDirPrefix,
+			page.GetLandingPageFileName(),
+			destFileName)
+		err := svc.copyImage(filePath, destPath)
+		if err != nil {
+			ctx.WrapError(err, err)
+			continue
+		}
+	}
+	return nil
+}
+
+func (svc *Generator) copyImage(sourceFile string, destFile string) error {
+	ctx := svc.ctx
+
+	ctx.Log(fmt.Sprintf("copy files fron %s to %s", sourceFile, destFile))
+
+	source, err := os.Open(sourceFile)
+	if err != nil {
+		return ctx.WrapError(err, err)
+	}
+	defer source.Close()
+
+	destination, err := os.Create(destFile)
+	if err != nil {
+		return ctx.WrapError(err, err)
+	}
+	defer destination.Close()
+
+	ctx.Log(fmt.Sprintf("copying files fron %s to %s", sourceFile, destFile))
+
+	// Copy the contents of the source file to the destination file
+	_, err = io.Copy(destination, source)
+	if err != nil {
+		return ctx.WrapError(err, err)
+	}
+
 	return nil
 }
 
 func (svc *Generator) createImageDir(dirName string) error {
 	ctx := svc.ctx
 
-	if !strings.HasPrefix(dirName, "assets/img/") {
-		dirName = "assets/img/" + dirName
+	if !strings.HasPrefix(dirName, ImageAssetsDirPrefix) {
+		dirName = ImageAssetsDirPrefix + dirName
 	}
 
 	fi, err := os.Stat(dirName)

@@ -15,6 +15,7 @@ type IGCloud interface {
 	ReadSlidesThumbnails(
 		token string,
 		fileID string,
+		filePrefix string,
 		maxSlides int) ([]string /*file paths*/, error)
 }
 

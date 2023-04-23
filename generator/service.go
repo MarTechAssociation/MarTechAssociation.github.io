@@ -129,14 +129,14 @@ func (svc *Generator) buildLandingPage(
 				page.Category = MarTechCategory(f.InterfaceToString(v))
 			} else if strings.HasPrefix(k, "Short explanation of what is your product or service") {
 				page.Description = f.InterfaceToString(v)
+			} else if strings.HasPrefix(k, "Your Presentations") && v != nil {
+				filePaths, err := svc.buildPresentationThumbnail(v.(string), gg)
+				if err != nil {
+					ctx.WrapError(err, err)
+					continue
+				}
+				page.PresentSlides = filePaths
 			}
-
-			// if strings.HasPrefix(k, "Your Presentations") && v != nil {
-			// 	err := svc.buildPresentationThumbnail(v.(string), gg)
-			// 	if err != nil {
-			// 		ctx.WrapError(err, err)
-			// 	}
-			// }
 		}
 		pages = append(pages, page)
 	}
@@ -146,20 +146,20 @@ func (svc *Generator) buildLandingPage(
 
 func (svc *Generator) buildPresentationThumbnail(
 	slidesURL string,
-	gg gcloud.IGCloud) error {
+	gg gcloud.IGCloud) ([]string, error) {
 
 	ctx := svc.ctx
 	cfg := svc.cfg
 
 	token := cfg.GoogleToken()
 	slideID := gcloud.GetSlideID(slidesURL)
-	filePaths, err := gg.ReadSlidesThumbnails(token, slideID, 10)
+	filePaths, err := gg.ReadSlidesThumbnails(token, slideID, "presents", MaxSlidesToRead)
 	if err != nil {
-		return ctx.WrapError(err, err)
+		return nil, ctx.WrapError(err, err)
 	}
 
 	ctx.LogObj("TEST", "filePaths", filePaths)
-	return nil
+	return filePaths, nil
 }
 
 func buildColumnsFromSheets(sheet *gcloud.GSheet) []string {
