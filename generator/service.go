@@ -92,12 +92,12 @@ func (svc *Generator) buildLandingPage(
 		for k, v := range item {
 			ctx.Log(fmt.Sprintf("k=%s", k))
 			ctx.Log(fmt.Sprintf("v=%s", v))
-			if strings.HasPrefix(k, "Your Presentations") && v != nil {
-				err := svc.buildPresentationThumbnail(v.(string), gg)
-				if err != nil {
-					ctx.WrapError(err, err)
-				}
-			}
+			// if strings.HasPrefix(k, "Your Presentations") && v != nil {
+			// 	err := svc.buildPresentationThumbnail(v.(string), gg)
+			// 	if err != nil {
+			// 		ctx.WrapError(err, err)
+			// 	}
+			// }
 			ctx.Log("---")
 		}
 
