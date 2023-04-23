@@ -7,6 +7,8 @@ import "os"
 type IConfig interface {
 	ServiceID() string
 	GoogleToken() string
+	MarTechSheetName() string
+	MarTechSheetURL() string
 }
 
 // Config implement IConfig
@@ -24,4 +26,12 @@ func (cfg *Config) ServiceID() string {
 
 func (cfg *Config) GoogleToken() string {
 	return os.Getenv("GOOGLE_TOKEN")
+}
+
+func (cfg *Config) MarTechSheetName() string {
+	return os.Getenv("MARTECH_SHEETS_NAME")
+}
+
+func (cfg *Config) MarTechSheetURL() string {
+	return os.Getenv("MARTECH_SHEETS_URL")
 }
