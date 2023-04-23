@@ -24,24 +24,24 @@ PAM can help marketer do their everyday tasks easier & automate. To increase ope
 
 <table>
 <tr>
-<td><img src="assets/img/pam/presents-slides-00-45129.png"></td></tr>
+<td><img src="assets/img/pam/presents-slides-00-60144.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/presents-slides-01-93435.png"></td></tr>
+<td><img src="assets/img/pam/presents-slides-01-69958.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/presents-slides-02-44704.png"></td></tr>
+<td><img src="assets/img/pam/presents-slides-02-82720.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/presents-slides-03-90070.png"></td></tr>
+<td><img src="assets/img/pam/presents-slides-03-38346.png"></td></tr>
 </table>
 
 ### Screenshots
 
 <table>
 <tr>
-<td><img src="assets/img/pam/screens-slides-00-65501.png"></td></tr>
+<td><img src="assets/img/pam/screens-slides-00-50642.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/screens-slides-01-68113.png"></td></tr>
+<td><img src="assets/img/pam/screens-slides-01-73532.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/screens-slides-02-79993.png"></td></tr>
+<td><img src="assets/img/pam/screens-slides-02-97752.png"></td></tr>
 <tr>
-<td><img src="assets/img/pam/screens-slides-03-23364.png"></td></tr>
+<td><img src="assets/img/pam/screens-slides-03-78250.png"></td></tr>
 </table>

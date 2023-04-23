@@ -26,6 +26,7 @@ The list of **MarTech platforms** below is categorized by types, for each platfo
 		// When category has changed, we write header for category
 		if currentCategory != string(page.Category) {
 			sb.Append("\n")
+			sb.Append("\n")
 			sb.Append(fmt.Sprintf(`## %s
 
 |Platform Name|Description||
