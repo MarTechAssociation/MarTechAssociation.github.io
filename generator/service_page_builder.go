@@ -4,6 +4,7 @@ package generator
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 func (svc *Generator) buildIndexMarkdown(pages []*LandingPage) error {
@@ -65,6 +66,49 @@ layout: default
 
 	fileName := fmt.Sprintf("%s.md", page.GetLandingPageFileName())
 	err := svc.writeFileContent(sb, fileName)
+	if err != nil {
+		return ctx.WrapError(err, err)
+	}
+
+	err = svc.copyImagesToAssetsDir(page)
+	if err != nil {
+		return ctx.WrapError(err, err)
+	}
+	return nil
+}
+
+func (svc *Generator) copyImagesToAssetsDir(page *LandingPage) error {
+	ctx := svc.ctx
+
+	err := svc.createImageDir(page.GetLandingPageFileName())
+	if err != nil {
+		return ctx.WrapError(err, err)
+	}
+
+	return nil
+}
+
+func (svc *Generator) createImageDir(dirName string) error {
+	ctx := svc.ctx
+
+	if !strings.HasPrefix(dirName, "assets/img/") {
+		dirName = "assets/img/" + dirName
+	}
+
+	fi, err := os.Stat(dirName)
+	if !os.IsNotExist(err) {
+		if !fi.IsDir() {
+			if err := os.Remove(dirName); err != nil {
+				return ctx.WrapError(err, err)
+			}
+		} else {
+			if err := os.RemoveAll(dirName); err != nil {
+				return ctx.WrapError(err, err)
+			}
+		}
+	}
+
+	err = os.Mkdir(dirName, 0755)
 	if err != nil {
 		return ctx.WrapError(err, err)
 	}
