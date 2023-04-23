@@ -84,3 +84,14 @@ type LandingPage struct {
 	Category    MarTechCategory `json:"category"`
 	Description string          `json:"description"`
 }
+
+func (m *LandingPage) GetShortDescription() string {
+	if len(m.Description) < MaxDescriptionInHomePage {
+		return m.Description
+	}
+	return m.Description[:MaxDescriptionInHomePage] + "..."
+}
+
+func (m *LandingPage) GetLandingPageFileName() string {
+	return f.EscapeName(m.Name)
+}

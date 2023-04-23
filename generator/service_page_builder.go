@@ -2,6 +2,7 @@
 package generator
 
 import (
+	"fmt"
 	"os"
 )
 
@@ -17,14 +18,66 @@ The list of **MarTech platforms** below is categorized by types, for each platfo
 
 `)
 
+	currentCategory := ""
+	for _, page := range pages {
+		// When category has changed, we write header for category
+		if currentCategory != string(page.Category) {
+			sb.Append("\n")
+			sb.Append(fmt.Sprintf(`## %s
+
+|Platform Name|Description||
+|---|---|---|`, page.Category))
+		}
+
+		// Write each platform items
+		// sample
+		// |AIYA|A.I. For your business|[Get started](./aiya.html)|
+		sb.Append("\n")
+		sb.Append(fmt.Sprintf(`|%s|%s|[Get started](./%s.html)|`,
+			page.Name,
+			page.GetShortDescription(),
+			page.GetLandingPageFileName()))
+	}
+	// Write index to the file index.md
 	fileName := "index.md"
 
-	_, err := os.Stat(fileName)
-	if !os.IsNotExist(err) {
-		err := os.Remove(fileName)
-		if err != nil {
-			ctx.WrapError(err, err)
-		}
+	err := svc.writeFileContent(sb, fileName)
+	if err != nil {
+		return ctx.WrapError(err, err)
+	}
+
+	return nil
+}
+
+func (svc *Generator) buildDetailMarkdown(page *LandingPage) error {
+	ctx := svc.ctx
+
+	sb := NewStringBuilder()
+
+	sb.Append(fmt.Sprintf(`---
+layout: default
+---
+
+## %s
+
+[back](./)
+`, page.Name))
+
+	fileName := fmt.Sprintf("%s.md", page.GetLandingPageFileName())
+	err := svc.writeFileContent(sb, fileName)
+	if err != nil {
+		return ctx.WrapError(err, err)
+	}
+
+	return nil
+}
+
+func (svc *Generator) writeFileContent(sb *StringBuilder, fileName string) error {
+	ctx := svc.ctx
+
+	err := svc.deleteFileIfExists(fileName)
+	if err != nil {
+		ctx.WrapError(err, err)
 	}
 
 	file, err := os.Create(fileName)
@@ -42,6 +95,14 @@ The list of **MarTech platforms** below is categorized by types, for each platfo
 	return nil
 }
 
-func (svc *Generator) buildDetailMarkdown(page *LandingPage) error {
+func (svc *Generator) deleteFileIfExists(fileName string) error {
+	ctx := svc.ctx
+	_, err := os.Stat(fileName)
+	if !os.IsNotExist(err) {
+		err := os.Remove(fileName)
+		if err != nil {
+			return ctx.WrapError(err, err)
+		}
+	}
 	return nil
 }
